@@ -17,4 +17,11 @@ path = "src/generic_types/main.rs"
 
 [[bin]]
 name = "main"
+path = "src/main/main.rs"
 doc = false
+
+
+[lib]
+name = "my_lib"
+path =  "src/my_lib/my_lib.rs"
+

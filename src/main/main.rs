@@ -6,6 +6,10 @@ fn main() {
     // optiions();
     // let value: u8 = value_in_cents(Coin::Quarter(UsState::Alaska));
     // println!("{}", value);
+
+    // call a lib
+    my_lib::hello_lib();
+
     catch_all_pattern();
 }
 
@@ -183,7 +187,7 @@ fn returning_value2(str: &mut String) {
 fn slice(str: &String) -> usize {
     let bytes = str.as_bytes();
 
-    // return the index ate the end of the bytes, marked by ''
+    // return the index at the end of the bytes, marked by ''
     for (i, &item) in bytes.iter().enumerate() {
         if item == b' ' {
             return i;
@@ -201,12 +205,13 @@ fn slice(str: &String) -> usize {
 }
 
 // structs
-struct User {
-    active: bool,
-    username: String,
-    sign_in_count: u32,
-}
 fn structs() {
+    struct User {
+        active: bool,
+        username: String,
+        sign_in_count: u32,
+    }
+
     let user = User {
         active: true,
         username: String::from("Doe"),
