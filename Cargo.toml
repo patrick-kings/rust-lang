@@ -6,10 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 
-[dependencies]
-rand = "0.8.5"
-
-
 [[bin]]
 name = "generic_types"
 path = "src/generic_types/main.rs"
@@ -25,3 +21,16 @@ doc = false
 name = "my_lib"
 path =  "src/my_lib/my_lib.rs"
 
+[[bin]]
+name = "automated_tests"
+path = "src/automated_tests/main.rs"
+
+[[bin]]
+name = "minigrep"
+path = "src/minigrep/main.rs"
+
+
+
+[dependencies]
+rand = "0.8.5"
+adder = {path = "adder"}
