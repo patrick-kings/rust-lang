@@ -29,7 +29,9 @@ path = "src/automated_tests/main.rs"
 name = "minigrep"
 path = "src/minigrep/main.rs"
 
-
+[[bin]]
+name = "multiple_files"
+path = "src/multiple_files/main.rs"
 
 [dependencies]
 rand = "0.8.5"
