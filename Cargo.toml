@@ -33,6 +33,10 @@ path = "src/minigrep/main.rs"
 name = "multiple_files"
 path = "src/multiple_files/main.rs"
 
+[[bin]]
+name = "functional"
+path = "src/functional_language_features/main.rs"
+
 [dependencies]
 rand = "0.8.5"
 adder = {path = "adder"}
