@@ -8,5 +8,3 @@ fn main() {
 
     file1::file1_func();
 }
-
-
