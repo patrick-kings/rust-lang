@@ -100,7 +100,7 @@ impl<T> MyBox<T> {
 // implement the `Deref` trait for `MyBox` type
 // The type `Target = T` defines an associated type for the `Deref` trait to use.
 // The body is filled with the `deref` method with &self.o so deref return a reference to the value
-// wi want to access with * operator. `0` access the first value in a tuple struct (MyBox)
+// we want to access with * operator. `0` access the first value in a tuple struct (MyBox)
 impl<T> std::ops::Deref for MyBox<T> {
     type Target = T;
 
@@ -109,11 +109,126 @@ impl<T> std::ops::Deref for MyBox<T> {
     }
 }
 
+// The `deref` method gives the compiler the ability to take a value of any type that implements
+// `Deref` and call the `deref` method to get a `&` reference that it knows how to dereference.
+//  `*y` translates to `*(y.deref())` behind the scenes.
 fn use_my_box() {
     let x = 5;
     let y = MyBox::new(x);
     assert_eq!(5, *y);
 }
+
+// Impliceit Deref Coercions with functions and methods.
+//
+// Deref coercion converts a reference to a type that implements the `Deref` trait into a reference
+// to another type. e.g deref coercion can convert `&String` to `&str` because `String` implements
+// the Deref trait such that it return `&str`.
+// Deref coercion happens automatically when we pass a reference to a particular type's value as an
+// argument to a function or method that doesn't match the parameter type in the function or
+// method definition. A sequence of calls to the deref method converts the type we provided into
+// the type the parameter needs.
+fn deref_coercion() {
+    println!("deref coercion");
+
+    let hello = |name: &str| {
+        println!("hello, {name}");
+    };
+
+    let m = MyBox::new(String::from("Rust"));
+
+    hello(&m);
+}
+
+// `Drop` Trait
+// The `Drop` trait lets us customize what happens when a value is about to go out of scope.
+// The Drop trait can be implemented on any type which can be used to release resources like files
+// or network connections.
+struct CustomSmartPointer {
+    data: String,
+}
+
+impl std::ops::Drop for CustomSmartPointer {
+    fn drop(&mut self) {
+        println!("Dropping CustomSmartPointer with data {}", self.data);
+    }
+}
+
+fn use_drop_trait() {
+    // Rust calls drop after this (`use_drop_trait`) function exits.
+    // calling drop manually produces a compile time error, this is because Rust will still call it
+    // when the value leaves the scope.
+    println!("The Drop Trait");
+
+    let c = CustomSmartPointer {
+        data: String::from("my stuff"),
+    };
+
+    let _d = CustomSmartPointer {
+        data: String::from("other stuff"),
+    };
+
+    // if we want to drop a value early, we have to use the `std::mem::drop` function.
+    std::mem::drop(c);
+
+    println!("CustomSmartPointers created");
+}
+
+// Rc<T> - The Reference Counted smart Pointer
+//
+// In the majority of cases, ownership is clear: you know exactly which variable owns a given value.
+// However, there are cases when a single value might have multiple owners.
+// For example, in graph data structures, multiple edges might point to the same node, and that node is conceptually owned by all of the edges that point to it.
+// A node shouldn’t be cleaned up unless it doesn’t have any edges pointing to it and so has no owners.
+// In such a case, you have to enable multiple ownership explicitly by using `Rc<T>` type
+// (Reference counting).
+// `Rc<T>` keeps track of the number of references to a value to determine whether or not the valeu
+// is still in use. If there are no zero references to a value, the value can be cleaned up without
+// any refeences becoming invalid.
+//
+// We use the Rc<T> type when we want to allocate some data on the head for multiple parts of our
+// program to read and we can't determine at compile time which part will finish using the data
+//
+// Rc<T> is only for use in single-threaded scenarios.
+use std::rc::Rc;
+enum List2 {
+    Cons(i32, std::rc::Rc<List2>),
+    Nil,
+}
+
+fn use_rc() {
+    let a = Rc::new(List2::Cons(
+        5,
+        Rc::new(List2::Cons(10, Rc::new(List2::Nil))),
+    ));
+
+    println!("count after creating a = {}", Rc::strong_count(&a));
+    // by cloning the Rc that is `a` is holding, we increase the number of references from one to
+    // two and letting `a` and `b` share ownership of the data in that Rc<List2>
+    // Everytime we call `Rc::clone()`, the refernce count to the data within the `Rc<List2>` will
+    // increase an the data won't be cleaned up unless there are zero refernces to it.
+    // The call to `Rc::clone()` doesn't perfom a deep copy like `a.clone()` does instead it only
+    // increments the refernce count which takes less time.
+    let _b = List2::Cons(3, Rc::clone(&a));
+    // print the refernce count each time we call `clone`
+    println!("count after creating b = {}", Rc::strong_count(&a));
+
+    {
+        let _c = List2::Cons(4, Rc::clone(&a));
+        println!("count after creating c = {}", Rc::strong_count(&a));
+    }
+
+    println!("count after c goes out of scope = {}", Rc::strong_count(&a));
+}
+
+// RefCell<T> and the Interior Mutability Pattern
+//
+// Interior Mutability is a design pattern in Rust that allows you to mutate data even when there
+// are immutable references to that data, normally, this action is disallowed by the borrowing
+// rules.
+// To mutate data, the pattern uses `unsafe` code inside a data structure to bend Rust's usual
+// rules that govern mutation and borrowing.
+// Unsafe code indicates to the compiler that we are checking the rules manually instead of relying
+// on the compiler to check them for us.
 
 fn main() {
     println!("smart pointers");
@@ -121,4 +236,10 @@ fn main() {
     smart_pointer_as_regular_references();
 
     use_my_box();
+
+    deref_coercion();
+
+    use_drop_trait();
+
+    use_rc();
 }
