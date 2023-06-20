@@ -5,8 +5,8 @@ mod lib;
 fn main() {
     let args: Vec<String> = std::env::args().collect();
 
-    let config = lib::Config::build(&args).unwrap_or_else(|err| {
-        println!("Problem parsing arguments: {err}");
+    let config = lib::Config::build(std::env::args()).unwrap_or_else(|err| {
+        eprintln!("Problem parsing arguments: {err}");
         std::process::exit(1);
     });
 
