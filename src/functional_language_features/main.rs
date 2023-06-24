@@ -113,6 +113,7 @@ fn borrow_mutability() {
 // sample of Option type from the `std` library
 // T is the generic type representing the type of the value in the `Some` variant of an `Option`.
 // That type T is also the return type of the `unwrap_or_else` function.
+// e.g Option<String> will get a String.
 // we specify a trait bound for the generic type `F` of `FnOnce()` which means that `F` must be
 // able to be called once, take no arguments and return a `T`.
 /*impl<T> Option<T> {
@@ -127,3 +128,13 @@ fn borrow_mutability() {
     }
 }
 */
+
+
+// ITERATORS
+// All iterators implement a trait named `Iterator` that is defined in the standard library.
+// `type Item` and `self::Item` are associated types which 
+// pub trait Iterator {
+//     type Item;
+//      fn next (&mut self) -> Option<self::Item>;
+// }
+
