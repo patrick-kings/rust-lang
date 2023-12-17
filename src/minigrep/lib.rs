@@ -1,7 +1,7 @@
 pub fn run(config: Config) -> Result<(), Box<dyn std::error::Error>> {
     let contents = std::fs::read_to_string(config.file_path)?;
 
-    let results = if config.ignore_case {
+    let _results = if config.ignore_case {
         search_case_insensitive(&config.query, &contents)
     } else {
         search(&config.query, &contents)

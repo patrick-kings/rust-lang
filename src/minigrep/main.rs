@@ -3,7 +3,7 @@ mod lib;
 //
 
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
+    let _args: Vec<String> = std::env::args().collect();
 
     let config = lib::Config::build(std::env::args()).unwrap_or_else(|err| {
         eprintln!("Problem parsing arguments: {err}");

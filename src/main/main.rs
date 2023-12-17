@@ -68,22 +68,22 @@ fn concepts() {
     // byte (u8 only) b'A'
 
     // floating point Types
-    let float: f32 = 2.0;
-    let float: f64 = 3.0;
+    let _float: f32 = 2.0;
+    let _float: f64 = 3.0;
 
     // booleans
-    let t: bool = true;
-    let f: bool = false;
+    let _t: bool = true;
+    let _f: bool = false;
 
     // character type
     // use single quotes for characters
-    let c: char = 'z';
-    let heart_eyed_cat: char = '😻';
+    let _c: char = 'z';
+    let _heart_eyed_cat: char = '😻';
 
     // compound types
     // tuple type
     let tup: (i32, f64, u8, char, bool) = (500, 2.6, 2, 'c', true);
-    let (x, y, z, c, b) = tup;
+    let (_x, y, _z, _c, _b) = tup;
     println!("y is : {}", y);
 
     // arrays
@@ -194,7 +194,7 @@ fn slice(str: &String) -> usize {
         }
     }
     // these are equal to str[..]
-    if (str[0..] == str[0..str.len()]) {
+    if str[0..] == str[0..str.len()] {
         return 1;
     }
 
@@ -212,7 +212,7 @@ fn structs() {
         sign_in_count: u32,
     }
 
-    let user = User {
+    let _user = User {
         active: true,
         username: String::from("Doe"),
         sign_in_count: 0,
@@ -222,8 +222,8 @@ fn structs() {
     struct Color(i32, i32, i32);
     struct Point(i32, i32, i32);
 
-    let black = Color(0, 0, 0);
-    let origin = Point(0, 0, 0);
+    let _black = Color(0, 0, 0);
+    let _origin = Point(0, 0, 0);
 }
 
 // Traits
@@ -267,7 +267,7 @@ fn traits() {
     println!("area is {}", rect.area());
 
     //
-    let sq = Rectangle::square(5);
+    let _sq = Rectangle::square(5);
 }
 
 // enums
@@ -289,12 +289,12 @@ impl IpAddr {
 }
 
 fn enums() {
-    let four: IpAddr = IpAddr::V4(String::from("127.0.0.1"));
-    let six: IpAddr = IpAddr::V6(String::from("::1"));
+    let _four: IpAddr = IpAddr::V4(String::from("127.0.0.1"));
+    let _six: IpAddr = IpAddr::V6(String::from("::1"));
 
     //
-    let home = IpAddr2::V4(127, 0, 0, 1);
-    let loopback = IpAddr2::V6(String::from("::1"));
+    let _home = IpAddr2::V4(127, 0, 0, 1);
+    let _loopback = IpAddr2::V6(String::from("::1"));
 }
 
 // option enum
@@ -303,7 +303,7 @@ fn enums() {
 
 fn optiions() {
     let num = Some(5);
-    let char = Some('c');
+    let _char = Some('c');
 
     let absent_num: Option<i32> = None;
 
@@ -374,7 +374,7 @@ fn if_let() {
 fn error_handling() {
     let greeting_file_result = std::fs::File::open("hello.txt");
 
-    let greeting_file: std::fs::File = match greeting_file_result {
+    let _greeting_file: std::fs::File = match greeting_file_result {
         Ok(file) => file,
         Err(error) => match error.kind() {
             std::io::ErrorKind::NotFound => match std::fs::File::create("hello.txt") {

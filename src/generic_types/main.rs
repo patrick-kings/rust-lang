@@ -27,12 +27,12 @@ fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
 }
 
 // defining struct to use generic type parameters
-struct Point<T>{
+struct Point<T> {
     x: T,
     y: T,
 }
 
-fn use_point(){
-let int = Point{x:5, y:10};
-let float = Point{x: 1.0, y: 54.2};
+fn use_point() {
+    let _int = Point { x: 5, y: 10 };
+    let _float = Point { x: 1.0, y: 54.2 };
 }
