@@ -44,6 +44,9 @@ path = "src/functional_language_features/main.rs"
 name = "smart_pointers"
 path = "src/smart_pointers/main.rs"
 
+[[bin]]
+name = "concurrency"
+path = "src/concurrency/main.rs"
 
 
 [dependencies]

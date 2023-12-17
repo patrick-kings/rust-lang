@@ -1,5 +1,3 @@
-
-
-pub fn lib2(){
+pub fn lib2() {
     println!("lib2");
 }

@@ -229,6 +229,24 @@ fn use_rc() {
 // rules that govern mutation and borrowing.
 // Unsafe code indicates to the compiler that we are checking the rules manually instead of relying
 // on the compiler to check them for us.
+//
+// We can use types that use the interior mutability pattern only when we can ensure that the
+// borrowing rules will be followed at runtime, even though the compiler can't guarantee that.
+
+// Enforcing Borrowing Rules at Runtime with `RefCell<T>`
+//
+// Unlike `Rc<T>`, the `<RefCell<T>` type represents single ownership over the data it holds.
+// The `RefCell<T>` varies from other smart pointers by having different rules, namely :
+//  - At any given time, you can have either(but not both), one mutable refernce or any number of
+//      immutable refernces.
+//  - References must always be valid.
+//
+//Unlike `Box<T>` where borrowing rules' invariants are checked at runtime, with `RefCell<T>`, these invariants
+//are checked at runtime. Therefore breaking these rules means that you program will panic and exit
+//during runtime.
+//
+// `RefCell<T>` is only for use in single-threaded scenarios.
+fn _use_refcell() {}
 
 fn main() {
     println!("smart pointers");
