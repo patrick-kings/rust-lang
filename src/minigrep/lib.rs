@@ -32,6 +32,10 @@ impl Config {
             None => return Err("Didn't get a query string"),
         };
 
+<<<<<<< HEAD
+        let ignore_case = std::env::var("IGNORE_CASE").is_ok();
+
+=======
         let file_path = match args.next() {
             Some(arg) => arg,
             None => return Err("Didn't get a file path"),
@@ -39,6 +43,7 @@ impl Config {
 
         let ignore_case = std::env::var("IGNORE_CASE").is_ok();
 
+>>>>>>> f02fbc350479eeb241003b630bc2896aa901174e
         return Ok(Config {
             query,
             file_path,

@@ -33,6 +33,11 @@ struct Point<T> {
 }
 
 fn use_point() {
+<<<<<<< HEAD
     let _int = Point { x: 5, y: 10 };
     let _float = Point { x: 1.0, y: 54.2 };
+=======
+    let int = Point { x: 5, y: 10 };
+    let float = Point { x: 1.0, y: 54.2 };
+>>>>>>> 9972509e4bc65c510e2ee750162f9410aa32f666
 }

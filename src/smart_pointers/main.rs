@@ -260,4 +260,5 @@ fn main() {
     use_drop_trait();
 
     use_rc();
+
 }
