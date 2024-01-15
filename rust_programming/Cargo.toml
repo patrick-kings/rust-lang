@@ -1,0 +1,54 @@
+[package]
+name = "rust_programming"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.dev]
+opt-level = 0 # optimization level
+
+[profile.release]
+opt-level = 3
+
+
+[[bin]]
+name = "generic_types"
+path = "src/generic_types/main.rs"
+
+[[bin]]
+name = "main"
+path = "src/main/main.rs"
+doc = false
+
+[lib]
+name = "my_lib"
+path =  "src/my_lib/my_lib.rs"
+
+[[bin]]
+name = "automated_tests"
+path = "src/automated_tests/main.rs"
+
+[[bin]]
+name = "minigrep"
+path = "src/minigrep/main.rs"
+
+[[bin]]
+name = "multiple_files"
+path = "src/multiple_files/main.rs"
+
+[[bin]]
+name = "functional"
+path = "src/functional_language_features/main.rs"
+
+[[bin]]
+name = "smart_pointers"
+path = "src/smart_pointers/main.rs"
+
+[[bin]]
+name = "concurrency"
+path = "src/concurrency/main.rs"
+
+
+[dependencies]
+rand = "0.8.5"
+adder = {path = "adder"}
