@@ -4,12 +4,22 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-[profile.dev]
-opt-level = 0 # optimization level
 
-[profile.release]
-opt-level = 3
+[[bin]]
+name = "webserver"
+path = "src/webserver/main.rs"
 
+[[bin]]
+name="advanced"
+path= "src/advanced_features/main.rs"
+
+[[bin]]
+name = "pattern_matching"
+path = "src/pattern_matching/main.rs"
+
+[[bin]]
+name = "oop"
+path = "src/oop/main.rs"
 
 [[bin]]
 name = "generic_types"

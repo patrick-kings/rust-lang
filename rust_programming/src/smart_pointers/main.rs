@@ -8,7 +8,7 @@
 // data they point to.
 
 // smart pointers include but not limited -: `String` `Vec<T>`. These types count as smart
-// pointers because they own some memory and allow you to manipulate it. The also have metadata and
+// pointers because they own some memory and allow you to manipulate it. They also have metadata and
 // extra capabilities or guarantees i.e `String` stores its capacity as metadata and has the extra
 // ability to ensure its data will always be valid UTF-8.
 
@@ -16,7 +16,7 @@
 // implement the `Deref` and `Drop` traits.
 // The `Deref` trait allows an instance of the smart pointer struct to behave like a reference so
 // you can write your code to work with either references or smart pointers.
-// The `Drop` trait allows you to customize the code that's tun when an instance of the smart
+// The `Drop` trait allows you to customize the code that's ran when an instance of the smart
 // pointer goes out of scope.
 
 // Common Smart pointers are -:
@@ -26,16 +26,16 @@
 //      rules at runtime instead of compile time.
 
 //          Box<T>
-// Boxes allow you store data on the head rather than the stack. What remains ont he stack is the
+// Boxes allow you store data on the heap rather than the stack. What remains on he stack is the
 // pointer to the heap data.
 // Boxes don't have performance overhead. other than storing their data on the heap instead of on
-// the stack but they don't have many capabilities either.
+// the stack, but they don't have many capabilities either.
 // The are useful in these situations -:
-//      When you have a type whose size can't be known at compile time and you want to use a value
+//  - When you have a type whose size can't be known at compile time and you want to use a value
 //      of that type in a context that requires an exact size.
-//      When you have a large amount of data and you want to transfer ownership but unsure the data
+//  - When you have a large amount of data and you want to transfer ownership but unsure the data
 //      won't be copied when you do so.
-//      When you want to own a value and you care only that it's a type that implements a
+//  - When you want to own a value and you care only that it's a type that implements a
 //      particular trait rather than being of a specific type.
 
 fn _boxes() {
@@ -88,7 +88,7 @@ fn smart_pointer_as_regular_references() {
 
 // defining our own smart pointer
 // The Box<T> type is defined as a tuple struct with one element
-// The new function mimics the new function in the std::Box type
+// The new function mimics the std::Box type
 struct MyBox<T>(T);
 
 impl<T> MyBox<T> {
@@ -118,7 +118,7 @@ fn use_my_box() {
     assert_eq!(5, *y);
 }
 
-// Impliceit Deref Coercions with functions and methods.
+// Implicit Deref Coercions with functions and methods.
 //
 // Deref coercion converts a reference to a type that implements the `Deref` trait into a reference
 // to another type. e.g deref coercion can convert `&String` to `&str` because `String` implements
@@ -170,7 +170,7 @@ fn use_drop_trait() {
     // if we want to drop a value early, we have to use the `std::mem::drop` function.
     std::mem::drop(c);
 
-    println!("CustomSmartPointers created");
+    println!("CustomSmartPointers droped");
 }
 
 // Rc<T> - The Reference Counted smart Pointer
@@ -195,7 +195,7 @@ enum List2 {
     Nil,
 }
 
-fn use_rc() {
+pub fn use_rc() {
     let a = Rc::new(List2::Cons(
         5,
         Rc::new(List2::Cons(10, Rc::new(List2::Nil))),
@@ -207,7 +207,7 @@ fn use_rc() {
     // Everytime we call `Rc::clone()`, the refernce count to the data within the `Rc<List2>` will
     // increase an the data won't be cleaned up unless there are zero refernces to it.
     // The call to `Rc::clone()` doesn't perfom a deep copy like `a.clone()` does instead it only
-    // increments the refernce count which takes less time.
+    // increments the reference count which takes less time.
     let _b = List2::Cons(3, Rc::clone(&a));
     // print the refernce count each time we call `clone`
     println!("count after creating b = {}", Rc::strong_count(&a));
@@ -220,33 +220,34 @@ fn use_rc() {
     println!("count after c goes out of scope = {}", Rc::strong_count(&a));
 }
 
-// RefCell<T> and the Interior Mutability Pattern
-//
-// Interior Mutability is a design pattern in Rust that allows you to mutate data even when there
-// are immutable references to that data, normally, this action is disallowed by the borrowing
-// rules.
-// To mutate data, the pattern uses `unsafe` code inside a data structure to bend Rust's usual
-// rules that govern mutation and borrowing.
-// Unsafe code indicates to the compiler that we are checking the rules manually instead of relying
-// on the compiler to check them for us.
-//
-// We can use types that use the interior mutability pattern only when we can ensure that the
-// borrowing rules will be followed at runtime, even though the compiler can't guarantee that.
+pub fn _use_refcell() {
+    // RefCell<T> and the Interior Mutability Pattern
+    //
+    // Interior Mutability is a design pattern in Rust that allows you to mutate data even when there
+    // are immutable references to that data, normally, this action is disallowed by the borrowing
+    // rules.
+    // To mutate data, the pattern uses `unsafe` code inside a data structure to bend Rust's usual
+    // rules that govern mutation and borrowing.
+    // Unsafe code indicates to the compiler that we are checking the rules manually instead of relying
+    // on the compiler to check them for us.
+    //
+    // We can use types that use the interior mutability pattern only when we can ensure that the
+    // borrowing rules will be followed at runtime, even though the compiler can't guarantee that.
 
-// Enforcing Borrowing Rules at Runtime with `RefCell<T>`
-//
-// Unlike `Rc<T>`, the `<RefCell<T>` type represents single ownership over the data it holds.
-// The `RefCell<T>` varies from other smart pointers by having different rules, namely :
-//  - At any given time, you can have either(but not both), one mutable refernce or any number of
-//      immutable refernces.
-//  - References must always be valid.
-//
-//Unlike `Box<T>` where borrowing rules' invariants are checked at runtime, with `RefCell<T>`, these invariants
-//are checked at runtime. Therefore breaking these rules means that you program will panic and exit
-//during runtime.
-//
-// `RefCell<T>` is only for use in single-threaded scenarios.
-fn _use_refcell() {}
+    // Enforcing Borrowing Rules at Runtime with `RefCell<T>`
+    //
+    // Unlike `Rc<T>`, the `<RefCell<T>` type represents single ownership over the data it holds.
+    // The `RefCell<T>` varies from other smart pointers by having different rules, namely :
+    //  - At any given time, you can have either(but not both), one mutable refernce or any number of
+    //      immutable refernces.
+    //  - References must always be valid.
+    //
+    //Unlike `Box<T>` where borrowing rules' invariants are checked at runtime, with `RefCell<T>`, these invariants
+    //are checked at runtime. Therefore breaking these rules means that you program will panic and exit
+    //during runtime.
+    //
+    // `RefCell<T>` is only for use in single-threaded scenarios.
+}
 
 fn main() {
     println!("smart pointers");
@@ -260,5 +261,4 @@ fn main() {
     use_drop_trait();
 
     use_rc();
-
 }

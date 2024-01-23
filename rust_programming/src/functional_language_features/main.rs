@@ -129,12 +129,10 @@ fn borrow_mutability() {
 }
 */
 
-
 // ITERATORS
 // All iterators implement a trait named `Iterator` that is defined in the standard library.
-// `type Item` and `self::Item` are associated types which 
+// `type Item` and `self::Item` are associated types which
 // pub trait Iterator {
 //     type Item;
 //      fn next (&mut self) -> Option<self::Item>;
 // }
-

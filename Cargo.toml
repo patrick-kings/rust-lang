@@ -2,3 +2,4 @@
 resolver = "2"
 
 members = ["rust_in_action", "rust_programming"]
+
