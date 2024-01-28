@@ -1,5 +1,5 @@
 [workspace]
 resolver = "2"
 
-members = ["rust_in_action", "rust_programming"]
+members = [ "actix", "async_book","rust_in_action", "rust_programming"]
 

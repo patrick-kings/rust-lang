@@ -58,7 +58,7 @@ impl Point<f32> {
 pub fn use_point() {
     let _int = Point { x: 5, y: 10 };
     let _float = Point { x: 1.0, y: 54.2 };
-    let int = Point { x: 5, y: 10 };
+    let _int = Point { x: 5, y: 10 };
     let float = Point { x: 1.0, y: 54.2 };
 
     println!("p.x = {}", float.x());
