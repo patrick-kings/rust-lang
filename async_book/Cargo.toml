@@ -13,3 +13,6 @@ name = "webserver"
 path = "webserver/main.rs"
 
 
+[dependencies.async-std]
+version = "1.6"
+features = ["attributes"]
