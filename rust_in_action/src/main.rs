@@ -1,8 +1,10 @@
-pub mod bit_patterns;
+mod bit_patterns;
+mod memory;
 
 fn main() {
-    println!("Hello, world!");
-    println!("");
+    println!("rust in action!");
 
-    bit_patterns::bit_patterns::bits();
+    // bit_patterns::bit_patterns::bits();
+
+    memory::execute();
 }
