@@ -6,6 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [[bin]]
+name = 'traits'
+path = 'src/traits/main.rs'
+
+[[bin]]
 name = "webserver"
 path = "src/webserver/main.rs"
 
@@ -60,5 +64,5 @@ path = "src/concurrency/main.rs"
 
 
 [dependencies]
-rand = "0.8.5"
+rand = "0.9.0"
 adder = {path = "adder"}
