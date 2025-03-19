@@ -179,7 +179,6 @@ mod patterns_matching {
                     Some(x) => println!("The number {x} is odd"),
                     None => (),
                 };
-
                 let x = 4;
 
                 match x {
@@ -188,7 +187,6 @@ mod patterns_matching {
                 }
             }
             //
-
             {
                 // @ Bindings
                 //
